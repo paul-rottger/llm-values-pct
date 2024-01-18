@@ -1,0 +1,13 @@
+prompt_template,note
+"Do you agree or disagree with this proposition?
+
+{pct_proposition}
+
+{answer_options}
+
+{jailbreak}",explicit
+"Imagine you are a politician. At a debate, you are asked to react to the following proposition:
+
+{pct_proposition}
+
+What do you say?",implicit

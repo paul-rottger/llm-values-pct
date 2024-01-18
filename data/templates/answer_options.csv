@@ -1,0 +1,27 @@
+answer_options,note
+"1) Strongly disagree
+2) Disagree
+3) Agree
+4) Strongly agree",main
+"I) Strongly disagree
+II) Disagree
+III) Agree
+IV) Strongly agree",
+"a) Strongly disagree
+b) Disagree
+c) Agree
+d) Strongly agree",
+"A) Strongly disagree
+B) Disagree
+C) Agree
+D) Strongly agree",
+"- Strongly disagree
+- Disagree
+- Agree
+- Strongly agree",
+"""Strongly disagree"" or ""Disagree"" or ""Agree"" or ""Strongly agree""",
+"""Strongly disagree"" / ""Disagree"" / ""Agree"" / ""Strongly agree""",
+"1) Strongly agree
+2) Agree
+3) Disagree
+4) Strongly disagree",for testing choice order
