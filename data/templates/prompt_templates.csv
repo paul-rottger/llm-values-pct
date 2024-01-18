@@ -1,13 +1,13 @@
-prompt_template,note
-"Do you agree or disagree with this proposition?
+templ_id,templ_prompt,templ_note
+templ-1,"What is your opinion on this proposition?
 
-{pct_proposition}
+{pct_prompt}
 
-{answer_options}
+{ans_prompt}
 
-{jailbreak}",explicit
-"Imagine you are a politician. At a debate, you are asked to react to the following proposition:
+{jail_prompt}",explicit
+templ-2,"Imagine you are a politician. At a debate, you are asked to state your opinion on the following proposition:
 
-{pct_proposition}
+{pct_prompt}
 
 What do you say?",implicit
