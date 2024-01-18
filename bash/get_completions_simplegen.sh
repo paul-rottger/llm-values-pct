@@ -3,10 +3,11 @@
 #SBATCH --job-name=jailbreak_experiments_180124
 #SBATCH --time=12:00:00
 #SBATCH --partition=gpu
-#SBATCH --gpus=2
+#SBATCH --gpus=1
+#SBATCH --mem=64000MB
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
-#SBATCH --account=Rottger
+#SBATCH --account=rottger
 #SBATCH --output=./logs/slurm-%A.out
 
 # activate conda environment
@@ -22,11 +23,11 @@ export TOKENIZERS_PARALLELISM=true
 # store repo path
 REPO=$(git rev-parse --show-toplevel)
 
-accelerate launch ../2_get_completions_simplegen.py \
+accelerate launch $REPO/src/2_get_completions_simplegen.py \
     --model_name_or_path "meta-llama/Llama-2-7b-chat-hf" \
     --test_data_input_path $REPO/data/prompts/jailbreak_experiments_180124.csv \
-    --n_test_samples 60 \
-    --batch_size 16 \
+    --n_test_samples 33 \
+    --batch_size 1 \
     --input_col "full_prompt" \
     --test_data_output_path $REPO/data/completions/jailbreak_experiments_180124/Llama-2-7b-chat-hf.csv \
     --load_in_8bit False \

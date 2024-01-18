@@ -69,6 +69,7 @@ def main(
     generator = SimpleGenerator(
         model_name_or_path,
         load_in_8bit = load_in_8bit,
+        add_chat_template=True,
     )
 
     ###########################################################
@@ -86,13 +87,13 @@ def main(
         skip_prompt=True,
         batch_size=batch_size,
         starting_batch_size=16,
-        add_chat_template=True
     )
 
     logging.info(f"Generated {len(completions)} completions")
 
     # write new model completions to new column
-    test_df["model_completion"] = completions
+    test_df["completion"] = completions
+    test_df["model"] = model_name_or_path
 
     # check if output path exists, otherwise create it
     if not os.path.exists(test_data_output_path.rsplit("/", 1)[0]):
