@@ -23,12 +23,16 @@ export TOKENIZERS_PARALLELISM=true
 # store repo path
 REPO=$(git rev-parse --show-toplevel)
 
+# set params
+PROVIDER="meta-llama"
+MODEL_NAME="Llama-2-7b-chat-hf"
+
 accelerate launch $REPO/src/2_get_completions_simplegen.py \
-    --model_name_or_path "meta-llama/Llama-2-7b-chat-hf" \
+    --model_name_or_path $PROVIDER/$MODEL_NAME \
     --test_data_input_path $REPO/data/prompts/jailbreak_experiments_180124.csv \
-    --n_test_samples 33 \
-    --batch_size 1 \
+    --n_test_samples 0 \
+    --batch_size 8 \
     --input_col "full_prompt" \
-    --test_data_output_path $REPO/data/completions/jailbreak_experiments_180124/Llama-2-7b-chat-hf.csv \
+    --test_data_output_path $REPO/data/completions/jailbreak_experiments_180124/$MODEL_NAME.csv \
     --load_in_8bit False \
     --log_level "debug" \

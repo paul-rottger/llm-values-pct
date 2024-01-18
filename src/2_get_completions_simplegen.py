@@ -69,7 +69,6 @@ def main(
     generator = SimpleGenerator(
         model_name_or_path,
         load_in_8bit = load_in_8bit,
-        add_chat_template=True,
     )
 
     ###########################################################
@@ -87,6 +86,7 @@ def main(
         skip_prompt=True,
         batch_size=batch_size,
         starting_batch_size=16,
+        apply_chat_template=True,
     )
 
     logging.info(f"Generated {len(completions)} completions")
