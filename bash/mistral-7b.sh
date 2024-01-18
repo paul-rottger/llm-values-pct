@@ -24,8 +24,8 @@ export TOKENIZERS_PARALLELISM=true
 REPO=$(git rev-parse --show-toplevel)
 
 # set params
-PROVIDER="meta-llama"
-MODEL_NAME="Llama-2-7b-chat-hf"
+PROVIDER="mistralai"
+MODEL_NAME="Mistral-7B-Instruct-v0.1"
 
 python $REPO/src/2_get_completions_simplegen.py \
     --model_name_or_path $PROVIDER/$MODEL_NAME \
