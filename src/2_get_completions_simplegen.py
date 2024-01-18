@@ -69,6 +69,7 @@ def main(
     generator = SimpleGenerator(
         model_name_or_path,
         load_in_8bit = load_in_8bit,
+        torch_dtype=torch.bfloat16,
     )
 
     ###########################################################
