@@ -32,9 +32,9 @@ def main():
         df_dict[input_file] = pd.read_csv(f"../data/templates/{input_file}.csv".format(input_file))
 
     # (optional) select specific templates and options for testing
-    df_dict["prompt_templates"] = df_dict["prompt_templates"][df_dict["prompt_templates"].templ_note=="explicit"]
+    df_dict["prompt_templates"] = df_dict["prompt_templates"][df_dict["prompt_templates"].templ_note=="implicit"]
     df_dict["answer_options"] = df_dict["answer_options"][df_dict["answer_options"].ans_note=="main"]
-    df_dict["jailbreaks"] = df_dict["jailbreaks"][df_dict["jailbreaks"].jail_id=="jail-2"]
+    df_dict["jailbreaks"] = df_dict["jailbreaks"][df_dict["jailbreaks"].jail_id=="jail-6"]
 
     # generate prompts
     prompts_df = generate_prompt_df(df_dict)
