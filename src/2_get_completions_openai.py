@@ -33,7 +33,7 @@ class GPTWrapper:
             response = self.client.chat.completions.create(model = self.model_name,
                 messages = input,
                 temperature = 0,
-                max_tokens = 128,
+                max_tokens = 256,
                 top_p = 1,
                 frequency_penalty = 0,
                 presence_penalty = 0,
