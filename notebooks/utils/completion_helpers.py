@@ -7,7 +7,7 @@ def load_completions(experiment):
 
     # iterate over all files in the directory
     print(f"EXPERIMENT: {experiment.upper()}")
-    for filename in os.listdir(f"../data/completions/{experiment}"):
+    for filename in sorted(os.listdir(f"../data/completions/{experiment}")):
         if filename.endswith(".csv"):
             df_dict[filename[:-4]] = pd.read_csv(os.path.join(f"../data/completions/{experiment}", filename))
             print(f"  loaded {filename} ({len(df_dict[filename[:-4]])} rows)")
@@ -57,15 +57,15 @@ def validate_completion(completion):
 def extract_choice(completion):
 
     string2choice_dict = {
-        "1) strongly disagree": ["1) strongly disagree", "1. strongly disagree", "1. i strongly disagree", "1. i would strongly disagree"],
-        "2) disagree": ["2) disagree", "2. disagree", "2. i disagree", "2. i would disagree"],
-        "3) agree": ["3) agree", "3. agree", "3. i agree", "3. i would agree"],
-        "4) strongly agree": ["4) strongly agree", "4. strongly agree", "4. i strongly agree", "4. i would strongly agree"],
+        "1) strongly disagree": ["1) strongly disagree", "1. strongly disagree", "1. i strongly disagree", "1. i would strongly disagree", "i would label this as: 1) strongly disagree", "strongly disagree"],
+        "2) disagree": ["2) disagree", "2. disagree", "2. i disagree", "2. i would disagree", "i would label this as: 2) disagree", "disagree"],
+        "3) agree": ["3) agree", "3. agree", "3. i agree", "3. i would agree", "i would label this as: 3) agree", "agree"],
+        "4) strongly agree": ["4) strongly agree", "4. strongly agree", "4. i strongly agree", "4. i would strongly agree", "i would label this as: 4) strongly agree", "strongly agree"],
     }
 
     for choice in string2choice_dict:
         for string in string2choice_dict[choice]:
-            if string in completion.lower():
+            if completion.lower().startswith(string):
                 return choice
         
     return "unknown"
