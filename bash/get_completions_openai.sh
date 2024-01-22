@@ -9,7 +9,7 @@ python ../src/2_get_completions_openai.py \
     --input_path $REPO/data/prompts/paraphrase_experiments_220124.csv \
     --input_col "full_prompt" \
     --caching_path $REPO/data/cache \
-    --output_path $REPO/data/completions/paraphrase_experiments_220124/gpt-3.5-turbo-0613.csv \
+    --output_path $REPO/data/completions/paraphrase_experiments_220124/gpt-3.5-turbo-1106.csv \
     --n_batches 1 \
     --start_batch 0 \
     --max_workers 3 \

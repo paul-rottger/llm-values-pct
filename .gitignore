@@ -4,3 +4,4 @@ env
 .env
 data/cache
 logs
+__pycache__
