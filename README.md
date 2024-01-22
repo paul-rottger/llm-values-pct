@@ -7,4 +7,4 @@ Manually edit and run `generate_prompts.py` in /src/ to generate prompts for the
 Run the bash scripts in /bash/ to generate completions for the prompts. The completions are saved in /data/completions/EXPERIMENT_NAME.
 
 ### 3. Analyse Completions
-Run the notebook `3_analyse_completions.ipynb` in /notebooks/ to analyse the completions.
+Run the notebooks in /notebooks/ to analyse the completions.
