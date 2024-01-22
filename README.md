@@ -1,8 +1,10 @@
-### Generate Prompts
-Manually edit and run `generate_prompts.py` to generate prompts for the model to complete. The prompts are saved in /data/prompts/.
+Brief explanation of the main experimental pipeline
 
-### Generate Completions
+### 1. Generate Prompts
+Manually edit and run `generate_prompts.py` in /src/ to generate prompts for the model to complete. The prompts are saved in /data/prompts/.
+
+### 2. Generate Completions
 Run the bash scripts in /bash/ to generate completions for the prompts. The completions are saved in /data/completions/EXPERIMENT_NAME.
 
-### Analyse Completions
+### 3. Analyse Completions
 Run the notebook `3_analyse_completions.ipynb` in /notebooks/ to analyse the completions.
