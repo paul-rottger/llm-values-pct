@@ -5,3 +5,4 @@ env
 data/cache
 logs
 __pycache__
+z_old
