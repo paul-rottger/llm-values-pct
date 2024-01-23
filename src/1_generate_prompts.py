@@ -33,9 +33,9 @@ def main():
 
     # (optional) select specific templates and options for testing
     #df_dict["prompt_templates"] = df_dict["prompt_templates"][df_dict["prompt_templates"].templ_note=="implicit"]
-    df_dict["prompt_templates"] = df_dict["prompt_templates"][df_dict["prompt_templates"].templ_id=="templ-11"]
+    df_dict["prompt_templates"] = df_dict["prompt_templates"][df_dict["prompt_templates"].templ_id=="templ-01"]
     df_dict["answer_options"] = df_dict["answer_options"][df_dict["answer_options"].ans_note=="main"]
-    df_dict["jailbreaks"] = df_dict["jailbreaks"][df_dict["jailbreaks"].jail_note=="implicit"]
+    df_dict["jailbreaks"] = df_dict["jailbreaks"][(df_dict["jailbreaks"].jail_note=="explicit") + (df_dict["jailbreaks"].jail_note=="neutral")]
     #df_dict["jailbreaks"] = df_dict["jailbreaks"][df_dict["jailbreaks"].jail_id=="jail-6"]
 
     # generate prompts

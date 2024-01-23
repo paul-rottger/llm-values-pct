@@ -1,7 +1,7 @@
 #!/bin/sh
 
-#SBATCH --job-name=jailbreak_experiments_180124
-#SBATCH --time=12:00:00
+#SBATCH --job-name=explicit_jailbreak_experiments_230124
+#SBATCH --time=01:00:00
 #SBATCH --partition=gpu
 #SBATCH --gpus=1
 #SBATCH --mem=64000MB
@@ -24,15 +24,16 @@ export TOKENIZERS_PARALLELISM=true
 REPO=$(git rev-parse --show-toplevel)
 
 # set params
-PROVIDER="berkeley-nest"
-MODEL_NAME="Starling-LM-7B-alpha"
+PROVIDER="mistralai"
+MODEL_NAME="Mistral-7B-Instruct-v0.2"
+EXPERIMENT="explicit_jailbreak_experiments_230124"
 
 python $REPO/src/2_get_completions_simplegen.py \
     --model_name_or_path $PROVIDER/$MODEL_NAME \
-    --test_data_input_path $REPO/data/prompts/jailbreak_experiments_180124.csv \
+    --test_data_input_path $REPO/data/prompts/$EXPERIMENT.csv \
     --n_test_samples 0 \
     --batch_size 8 \
     --input_col "full_prompt" \
-    --test_data_output_path $REPO/data/completions/jailbreak_experiments_180124/$MODEL_NAME.csv \
+    --test_data_output_path $REPO/data/completions/$EXPERIMENT/$MODEL_NAME.csv \
     --load_in_8bit False \
     --log_level "debug" \
