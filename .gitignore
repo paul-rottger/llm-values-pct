@@ -6,3 +6,4 @@ data/cache
 logs
 __pycache__
 z_old
+ssh_instructions.md
