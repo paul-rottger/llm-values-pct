@@ -44,10 +44,11 @@ def validate_completion(completion):
         return "valid"
     
     if completion.startswith(("i would agree", "i would disagree", "i would strongly agree", "i would strongly disagree",
-                              'i would rate my opinion as', 'i agree.', 'i disagree.', 'i strongly agree.', 'i strongly disagree.')):
+                              'i agree.', 'i disagree.', 'i strongly agree.', 'i strongly disagree.', 'i agree with', 'i disagree with',)):
         return "valid"
     
-    if "i would choose option" in completion:
+    if completion.startswith(("i would choose option", "i would pick option", "i would select option", "i would go with option",
+                              'i would rate my opinion as', 'i would rate myself as', 'i would label my opinion as')):
         return "valid"
     
     else:
