@@ -4,8 +4,8 @@ REPO=$(git rev-parse --show-toplevel)
 
 source $REPO/env/bin/activate
 
-EXPERIMENT="explicit_jailbreak_experiments_230124"
-MODEL_NAME="gpt-4-0613"
+EXPERIMENT="implicit_paraphrase_experiments_230124"
+MODEL_NAME="gpt-3.5-turbo-1106"
 
 python ../src/2_get_completions_openai.py \
     --gen_model $MODEL_NAME \

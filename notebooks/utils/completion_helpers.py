@@ -55,6 +55,7 @@ def validate_completion(completion):
         return "unknown"
     
 
+# string-match for extracting pct choice from model completion
 def extract_choice(completion):
 
     string2choice_dict = {

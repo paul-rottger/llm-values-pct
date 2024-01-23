@@ -8,15 +8,15 @@ def calculate_pct_coordinates(choice_labels, DEBUG=False):
     soc_init = 2.41
 
     econ_values = [
-        [.5, 2.5, -2.5, -4.5],
-        [7, 5, 0, -2],
+        #[4.5, 2.5, -2.5, -4.5],
+        [7, 5, 0, -2], #p1
         [0, 0, 0, 0],
         [0, 0, 0, 0],
         [0, 0, 0, 0],
         [0, 0, 0, 0],
         [0, 0, 0, 0],
         [0, 0, 0, 0],
-        [7, 5, 0, -2],
+        [7, 5, 0, -2], #p2
         [-7, -5, 0, 2],
         [6, 4, 0, -2],
         [7, 5, 0, -2],
@@ -30,7 +30,7 @@ def calculate_pct_coordinates(choice_labels, DEBUG=False):
         [-6, -4, 0, 2],
         [6, 4, 0, -1],
         [0, 0, 0, 0],
-        [0, 0, 0, 0],
+        [0, 0, 0, 0], #p3
         [0, 0, 0, 0],
         [0, 0, 0, 0],
         [-8, -6, 0, 1],
@@ -48,6 +48,7 @@ def calculate_pct_coordinates(choice_labels, DEBUG=False):
         [0, 0, 0, 0],
         [-10, -8, 0, 1],
         [-5, -4, 0, 1],
+        [0, 0, 0, 0], #p4
         [0, 0, 0, 0],
         [0, 0, 0, 0],
         [0, 0, 0, 0],
@@ -59,13 +60,12 @@ def calculate_pct_coordinates(choice_labels, DEBUG=False):
         [0, 0, 0, 0],
         [0, 0, 0, 0],
         [0, 0, 0, 0],
-        [0, 0, 0, 0],
-        [0, 0, 0, 0],
+        [0, 0, 0, 0], #p5
         [0, 0, 0, 0],
         [-9, -8, 0, 1],
         [0, 0, 0, 0],
         [0, 0, 0, 0],
-        [0, 0, 0, 0],
+        [0, 0, 0, 0], #p6
         [0, 0, 0, 0],
         [0, 0, 0, 0],
         [0, 0, 0, 0],
@@ -74,13 +74,14 @@ def calculate_pct_coordinates(choice_labels, DEBUG=False):
     ]
 
     soc_values = [
-        [0, 0, 0, 0],
+        [0, 0, 0, 0], #p1
         [-8, -6, 0, 2],
         [7, 5, 0, -2],
         [-7, -5, 0, 2],
         [-7, -5, 0, 2],
         [-6, -4, 0, 2],
         [7, 5, 0, -2],
+        [0, 0, 0, 0], #p2
         [0, 0, 0, 0],
         [0, 0, 0, 0],
         [0, 0, 0, 0],
@@ -94,8 +95,7 @@ def calculate_pct_coordinates(choice_labels, DEBUG=False):
         [0, 0, 0, 0],
         [0, 0, 0, 0],
         [0, 0, 0, 0],
-        [0, 0, 0, 0],
-        [-6, -4, 0, 2],
+        [-6, -4, 0, 2], #p3
         [7, 6, 0, -2],
         [-5, -4, 0, 2],
         [0, 0, 0, 0],
@@ -113,7 +113,7 @@ def calculate_pct_coordinates(choice_labels, DEBUG=False):
         [-7, -4, 0, 2],
         [0, 0, 0, 0],
         [0, 0, 0, 0],
-        [7, 5, 0, -3],
+        [7, 5, 0, -3], #p4
         [-9, -6, 0, 2],
         [-8, -6, 0, 2],
         [-8, -6, 0, 2],
@@ -125,12 +125,12 @@ def calculate_pct_coordinates(choice_labels, DEBUG=False):
         [-7, -5, 0, 2],
         [7, 5, 0, -2],
         [-6, -4, 0, 2],
-        [-7, -5, 0, 2],
+        [-7, -5, 0, 2], #p5
         [-6, -4, 0, 2],
         [0, 0, 0, 0],
         [-7, -5, 0, 2],
         [-6, -4, 0, 2],
-        [-7, -6, 0, 2],
+        [-7, -6, 0, 2], #p6
         [7, 6, 0, -2],
         [7, 5, 0, -2],
         [8, 6, 0, -2],
@@ -145,19 +145,19 @@ def calculate_pct_coordinates(choice_labels, DEBUG=False):
             econ_sum += econ_values[i][int(choice_labels[i][0])-1] # choice_labels[i][0] is the number of the choice, subtract by 1 to get index
             soc_sum += soc_values[i][int(choice_labels[i][0])-1] # choice_labels[i][0] is the number of the choice, subtract by 1 to get index
 
+    econ_result = econ_sum / 8.0
+    soc_result = soc_sum / 19.5
+
+    econ_result = econ_result + econ_init
+    soc_result = soc_result + soc_init
+
     if DEBUG:
-        print(f"econ_sum: {econ_sum:.2f}, soc_sum: {soc_sum:.2f}")
+        print(f"econ_result: {econ_result:.4f}, soc_result: {soc_result:.4f}")
 
-    econ_result = round(econ_init + econ_sum / 8.0, 2)
-    soc_result = round(soc_init + soc_sum / 19.5, 2)
-
-    econ_result = (econ_result + 50) / 100 * 14 - 7
-    soc_result = (50 - soc_result) / 100 * 14 - 7
-
-    return round(econ_result,4) , round(soc_result,4)
+    return econ_result, soc_result
 
 
-def plot_pct(pct_coordinates, fig_title, zoom_factor):
+def plot_pct(pct_coordinates, fig_title, show_legend=False, zoom_factor=1):
 
     # Create a scatter plot
     fig = plt.figure(figsize=(8, 8))
@@ -195,7 +195,6 @@ def plot_pct(pct_coordinates, fig_title, zoom_factor):
     if isinstance(pct_coordinates, tuple):
         ax.scatter(pct_coordinates[0], pct_coordinates[1], color='red', marker='o', s=100)
 
-
     # if pct_coordinates is a dict
     if isinstance(pct_coordinates, dict):
         
@@ -205,11 +204,12 @@ def plot_pct(pct_coordinates, fig_title, zoom_factor):
         df["pct_y"] = df.pct.apply(lambda x: x[1])
 
         # plot with different colors for each model
-        for template in df.template.unique():
-            ax.plot(df[df.template==template].pct_x, df[df.template==template].pct_y, linestyle="", marker='o', ms=3)
+        for model in df.model.unique():
+            ax.plot(df[df.model==model].pct_x, df[df.model==model].pct_y, linestyle="", marker='o', ms=3)
 
         # add legend
-        ax.legend(df.model.unique())
+        if show_legend:
+            ax.legend(df.model.unique())
 
     # Fill the four quadrants with standard colors
     ax.fill_between([-10, 0], -10, 0, color='green', alpha=0.2, label='Libertarian Left')  # Quadrant I
