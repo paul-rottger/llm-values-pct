@@ -1,6 +1,6 @@
 #!/bin/sh
 
-#SBATCH --job-name=jailbreak_experiments_180124
+#SBATCH --job-name=explicit_paraphrase_experiments_240124
 #SBATCH --time=12:00:00
 #SBATCH --partition=gpu
 #SBATCH --gpus=1
@@ -26,7 +26,7 @@ REPO=$(git rev-parse --show-toplevel)
 # set params
 PROVIDER="meta-llama"
 MODEL_NAME="Llama-2-7b-chat-hf"
-EXPERIMENT="paraphrase_experiments_220124"
+EXPERIMENT="explicit_paraphrase_experiments_240124"
 
 python $REPO/src/2_get_completions_simplegen.py \
     --model_name_or_path $PROVIDER/$MODEL_NAME \

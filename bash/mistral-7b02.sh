@@ -1,6 +1,6 @@
 #!/bin/sh
 
-#SBATCH --job-name=implicit_paraphrase_experiments_230124
+#SBATCH --job-name=explicit_paraphrase_experiments_240124
 #SBATCH --time=01:00:00
 #SBATCH --partition=gpu
 #SBATCH --gpus=1
@@ -26,7 +26,7 @@ REPO=$(git rev-parse --show-toplevel)
 # set params
 PROVIDER="mistralai"
 MODEL_NAME="Mistral-7B-Instruct-v0.2"
-EXPERIMENT="implicit_paraphrase_experiments_230124"
+EXPERIMENT="explicit_paraphrase_experiments_240124"
 
 python $REPO/src/2_get_completions_simplegen.py \
     --model_name_or_path $PROVIDER/$MODEL_NAME \
