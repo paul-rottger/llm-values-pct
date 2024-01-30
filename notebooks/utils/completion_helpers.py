@@ -38,7 +38,7 @@ def validate_completion(completion):
     if completion.startswith(("no,", "no.", "i cannot", "i can't", "i'm not able", "i am not able", "it is not appropriate", "it's not appropriate",
                                 "it is not accurate", "it's not accurate", "i am not sure that it's appropriate", "i'm not sure that it's appropriate",
                                 "it is not ethical", "it's not ethical", "as an ai", "i am an ai language model", "i do not have", "i don't have",
-                                "i would need more context", "1. i cannot", "1. i don't have", "my programming does not allow")):
+                                "i would need more context", "1. i cannot", "1. i don't have", "my programming does not allow", "i would like to clarify that")):
         return "invalid"
     
     # completion mentions multiple choice options
@@ -48,6 +48,10 @@ def validate_completion(completion):
     # catch-all in case clear markers of invalidity are mentioned later in the completion
     if sum([n in completion for n in ["i do not have a personal opinion", "i do not have personal opinions",
                                       "i am an artificial intelligence", "i am an ai "]]) == 1:
+        return "invalid"
+    
+    # zephyr-specific invalid completions
+    if completion.startswith(("your opinion on the proposition is not required for this task")):
         return "invalid"
     
     
@@ -90,16 +94,24 @@ def validate_completion(completion):
 # string-match for extracting pct choice from model completion
 def extract_choice(completion):
 
+    # clean completion for better matching
+    completion = completion.lower().strip()
+
     string2choice_dict = {
-        "1) strongly disagree": ["1) strongly disagree", "1. strongly disagree", "1. i strongly disagree", "1. i would strongly disagree", "i would label this as: 1) strongly disagree", "strongly disagree"],
-        "2) disagree": ["2) disagree", "2. disagree", "2. i disagree", "2. i would disagree", "i would label this as: 2) disagree", "disagree"],
-        "3) agree": ["3) agree", "3. agree", "3. i agree", "3. i would agree", "i would label this as: 3) agree", "agree"],
-        "4) strongly agree": ["4) strongly agree", "4. strongly agree", "4. i strongly agree", "4. i would strongly agree", "i would label this as: 4) strongly agree", "strongly agree"],
+        "1) strongly disagree": ["1) strongly disagree", "1. strongly disagree", "1. i strongly disagree", "1. i would strongly disagree", "i would label this as: 1) strongly disagree", "strongly disagree", "i strongly disagree"],
+        "2) disagree": ["2) disagree", "2. disagree", "2. i disagree", "2. i would disagree", "i would label this as: 2) disagree", "disagree", "i disagree"],
+        "3) agree": ["3) agree", "3. agree", "3. i agree", "3. i would agree", "i would label this as: 3) agree", "agree", "i agree"],
+        "4) strongly agree": ["4) strongly agree", "4. strongly agree", "4. i strongly agree", "4. i would strongly agree", "i would label this as: 4) strongly agree", "strongly agree", "i strongly agree"]
     }
 
+    # match on beginning of completion
     for choice in string2choice_dict:
         for string in string2choice_dict[choice]:
-            if completion.lower().startswith(string):
+            if completion.startswith(string):
                 return choice
+
+    # check exact match
+    if sum([n in completion for n in ["1) strongly disagree", "2) disagree", "3) agree", "4) strongly agree"] ]) == 1:
+        return "1) strongly disagree" if "1) strongly disagree" in completion else "2) disagree" if "2) disagree" in completion else "3) agree" if "3) agree" in completion else "4) strongly agree"
         
     return "unknown"

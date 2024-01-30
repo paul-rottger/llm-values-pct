@@ -1,8 +1,11 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
+import seaborn as sns
 
 def calculate_pct_coordinates(choice_labels, DEBUG=False):
+
+    # adapted from https://github.com/politicalcompass/politicalcompass.github.io/blob/master/js/js.js
 
     econ_init = 0.38
     soc_init = 2.41
@@ -157,15 +160,31 @@ def calculate_pct_coordinates(choice_labels, DEBUG=False):
     return econ_result, soc_result
 
 
-def plot_pct(pct_coordinates, fig_title, show_legend=False, zoom_factor=1):
+def plot_pct(pct_coordinates, show_legend=False):
+
+    modelname_2_text = {
+        'Llama-2-7b-chat-hf': 'Llama2 7b Chat',
+        'Llama-2-13b-chat-hf': 'Llama2 13b Chat',
+        'Llama-2-70b-chat-hf': 'Llama2 70b Chat',
+        'Mistral-7B-Instruct-v0.1': 'Mistral 7b Iv0.1',
+        'Mistral-7B-Instruct-v0.2': 'Mistral 7b Iv0.2',
+        'gpt-3.5-turbo-0613': 'GPT-3.5 0613',
+        'gpt-3.5-turbo-1106': 'GPT-3.5 1106',
+        'gpt-4-0613': 'GPT-4 0613',
+        'gpt-4-1106-preview': 'GPT-4 1106',
+        'zephyr-7b-beta': 'Zephyr 7b β',
+        }
 
     # Create a scatter plot
-    fig = plt.figure(figsize=(8, 8))
-    ax = fig.add_subplot(1, 1, 1)
+    fig, ax = plt.subplots(figsize=(8, 8))
 
     # Set axis labels
-    ax.set_xlabel("ECONOMIC (Left <-> Right)")
-    ax.set_ylabel("SOCIAL (Libertarian <-> Authoritarian)")
+    ax.set_xlabel("Libertarian")
+    plt.text(0, 10.7, 'Authoritarian', ha='center', va='center')
+    plt.text(-9.7, 0.2, 'Economic-', ha="left")
+    plt.text(-9.7, -0.8, 'Left', ha="left")
+    plt.text(9.7, 0.2, 'Economic-', ha="right")
+    plt.text(9.7, -0.8, 'Right', ha="right")
 
     # set ticks
     ax.set_xticks(np.arange(-10, 11, 1), minor=True)
@@ -173,55 +192,48 @@ def plot_pct(pct_coordinates, fig_title, show_legend=False, zoom_factor=1):
     ax.set_yticks(np.arange(-10, 11, 1), minor=True)
     ax.set_yticks(np.arange(-10, 11, 5), minor=False)
 
-    # set grid
-    ax.grid(True, linestyle='--', alpha=0.4, color='gray', which="both")  # Standard grid color
-    ax.axhline(0, color='black', lw=0.8)  # X-axis color
-    ax.axvline(0, color='black', lw=0.8)  # Y-axis color
+    # Fill the four quadrants with standard colors
+    ax.fill_between([-10, 0], -10, 0, color='green', alpha=0.2)  # Quadrant I
+    ax.fill_between([0, 10], -10, 0, color='yellow', alpha=0.2)  # Quadrant II
+    ax.fill_between([-10, 0], 0, 10, color='red', alpha=0.2)  # Quadrant III
+    ax.fill_between([0, 10], 0, 10, color='blue', alpha=0.2)  # Quadrant IV
 
-    # remove spines
-    ax.spines['right'].set_visible(False)
-    ax.spines['top'].set_visible(False)
-    ax.spines['left'].set_visible(False)
-    ax.spines['bottom'].set_visible(False)
+    # set grid, then remove ticks and text from ticks
+    ax.grid(True, linestyle='--', alpha=0.4, color='gray', which="both", zorder=0)
+    ax.tick_params(axis='both', which='both', length=0)
+    ax.set_xticklabels([])
+    ax.set_yticklabels([])
+    
+    # add arrows to both ends of each axis
+    ax.arrow(-10, 0, 20, 0, length_includes_head=True, head_width=0.2, head_length=0.2, color='black', lw=0.8)
+    ax.arrow(0, -10, 0, 20, length_includes_head=True, head_width=0.2, head_length=0.2, color='black', lw=0.8)
+    ax.arrow(10, 0, -20, 0, length_includes_head=True, head_width=0.2, head_length=0.2, color='black', lw=0.8)
+    ax.arrow(0, 10, 0, -20, length_includes_head=True, head_width=0.2, head_length=0.2, color='black', lw=0.8)
 
-    # Set axis limits
-    #ax.set_xlim(-10, 10)
-    #ax.set_ylim(-10, 10)
+    # Remove all spines
+    sns.despine(ax=ax, left=True, right=True, bottom=True, top=True)
 
-    # Title and legend
-    ax.set_title(fig_title.upper())
-
-    #if pct_coordinates is a tuple
     if isinstance(pct_coordinates, tuple):
         ax.scatter(pct_coordinates[0], pct_coordinates[1], color='red', marker='o', s=100)
-
-    # if pct_coordinates is a dict
-    if isinstance(pct_coordinates, dict):
-        
-        # collapse nested dict into dataframe
+    
+    elif isinstance(pct_coordinates, dict):
         df = pd.DataFrame(pct_coordinates).stack().reset_index().rename(columns={"level_0": "template", "level_1": "model", 0: "pct"})
         df["pct_x"] = df.pct.apply(lambda x: x[0])
         df["pct_y"] = df.pct.apply(lambda x: x[1])
+        df["model"] = df.model.apply(lambda x: modelname_2_text[x])
 
-        # plot with different colors for each model
-        for model in df.model.unique():
-            ax.plot(df[df.model==model].pct_x, df[df.model==model].pct_y, linestyle="", marker='o', ms=3)
+        # Plot with different colors for each model
+        sns.scatterplot(x="pct_x", y="pct_y", hue="model", data=df, marker='o', s=50, palette='tab10', ax=ax, zorder=100)
 
-        # add legend
+        # Add legend, replacing model names with more readable names
         if show_legend:
-            ax.legend(df.model.unique())
+            ax.legend(loc="upper right", borderaxespad=0.2, markerscale=2, handlelength=1.5, handletextpad=0.5)
 
-    # Fill the four quadrants with standard colors
-    ax.fill_between([-10, 0], -10, 0, color='green', alpha=0.2, label='Libertarian Left')  # Quadrant I
-    ax.fill_between([0, 10], -10, 0, color='yellow', alpha=0.2, label='Libertarian Right')  # Quadrant II
-    ax.fill_between([-10, 0], 0, 10, color='red', alpha=0.2, label='Authoritarian Left')  # Quadrant III
-    ax.fill_between([0, 10], 0, 10, color='blue', alpha=0.2, label='Authoritarian Right')  # Quadrant IV
+    # Set axis limits
+    ax.set_xlim(-10, 10)
+    ax.set_ylim(-10, 10)
 
-    # zoom in on the center
-    ax.set_xlim(-10/zoom_factor, 10/zoom_factor)
-    ax.set_ylim(-10/zoom_factor, 10/zoom_factor)
+    # remove y axis label
+    ax.set_ylabel('')
 
     plt.show()
-
-
-# adapted from https://github.com/andrewimpellitteri/llm_poli_compass

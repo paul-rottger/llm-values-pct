@@ -1,12 +1,13 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-def make_validity_bar_chart(df, grouping_col, plot_title, disable_yticks):
+def make_validity_bar_chart(df, grouping_col, plot_title, disable_yticks=True, disable_legend=True, axis=None):
 
     """
     df: dataframe with columns "jail_id" and "validation_label"
     plot_title: string
     disable_yticks: boolean
+    axis: matplotlib axis object
     """
 
     graph_df = pd.DataFrame(columns=["ylabel", "valid", "invalid", "unknown"])
@@ -48,14 +49,17 @@ def make_validity_bar_chart(df, grouping_col, plot_title, disable_yticks):
     graph_df = graph_df.sort_index(axis=1)
 
     # plot as stacked bar chart, with specified bar colors, thin bars
-    graph_df.plot.barh(stacked=True, figsize=(10,3), color=["#90ee90", "#ffbbbb", "#dcdcdc"], width=0.8)
+
+    graph_df.plot.barh(stacked=True, figsize=(10,3), color=["#90ee90", "#ffbbbb", "#dcdcdc"], width=0.8, ax=axis)
     plt.tight_layout()
     plt.title(plot_title, y=1.05)
     plt.xlim(0, 100)
 
     # set up legend 
-    plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left', title="Completion (%)")
-    #plt.legend().remove()
+    if not disable_legend:
+        plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left', title="Completion (%)")
+    else:
+        plt.legend().remove()
 
     # remove x and y labels
     plt.xlabel('')
