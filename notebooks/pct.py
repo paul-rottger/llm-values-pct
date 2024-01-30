@@ -202,8 +202,3 @@ def test_pct():
   len([item for page in pct.pages for item in page.items]) # 62 items total
   pct.set_values([2]*62)
   pct.take_test() # 0.38, 2.41
-
-
-
-
-
