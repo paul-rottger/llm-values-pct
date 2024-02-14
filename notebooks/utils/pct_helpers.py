@@ -227,7 +227,8 @@ def plot_pct(pct_coordinates, show_legend=False):
 
         # Add legend, replacing model names with more readable names
         if show_legend:
-            ax.legend(loc="upper right", borderaxespad=0.2, markerscale=2, handlelength=1.5, handletextpad=0.5)
+            ax.legend(loc="upper left", borderaxespad=0.2, markerscale=2, handlelength=1.5, handletextpad=0.5)
+
 
     # Set axis limits
     ax.set_xlim(-10, 10)
@@ -237,3 +238,5 @@ def plot_pct(pct_coordinates, show_legend=False):
     ax.set_ylabel('')
 
     plt.show()
+
+    return fig, ax
