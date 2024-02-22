@@ -6,15 +6,18 @@ For details, please refer to the paper (Link TBU).
 ```
 .
 ├── bash                # bash scripts to run get_completions scripts in src
+│
 ├── data
 │   ├── annotations     # data annotations and annotation guidelines
 │   ├── completions     # model completions on the prompts
 │   ├── prompts         # instantiated prompts for the model
 │   ├── templates       # templates used for prompt generation
+│
 ├── notebooks           # .ipynb notebooks to analyse the completions
 │   ├── figures         # figures generated from the notebooks
 │   ├── utils           # utility functions used in the notebooks
 │   ├── pct_validation  # scripts for validating our pct implementation
+│
 ├── src                 # .py scripts to generate prompts and get completions
 ```
 
