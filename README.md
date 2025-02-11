@@ -1,6 +1,6 @@
 This repo contains code and data to reproduce the experiments from "**Political Compass or Spinning Arrow? Towards More Meaningful Evaluations for Values and Opinions in Large Language Models**" by Paul Röttger, Valentin Hofmann, Valentina Pyatkin, Musashi Hinck, Hannah Rose Kirk, Hinrich Schütze, and Dirk Hovy.
 
-For details, please refer to the paper (Link TBU).
+For details, please refer to our ACL paper [here](https://aclanthology.org/2024.acl-long.816/).
 
 ### Repo Structure
 ```
